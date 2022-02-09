@@ -2,6 +2,8 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+TABMAX=38167
+ERRMAX=0.01
 
 def main():
     f1 = open("S2GE_APP3_Problematique_Detecteur_Primaire.csv", "r")
@@ -23,16 +25,11 @@ def main():
     plt.ylabel("Voltage (meV)")
 
     coincid = np.copy(detect_prim)
-    for i in range(0, 38167):
-        coincid[i][2]=0
-    for i in range(0, 38167):
-        pos=detect_prim[i][2]+0.1*detect_prim[i][2]
-        neg=detect_prim[i][2]-0.1*detect_prim[i][2]
-        for j in range(-5, 5):
-            index=i+j
-            index=np.clip(index, 0, 38166)
-            if neg<detect_sec[index][2] and detect_sec[index][2]<pos:
-                coincid[i][2]=detect_prim[i][2]
+    for i in range(0, TABMAX):
+        pos=detect_prim[i][1]+ERRMAX*detect_prim[i][1]
+        neg=detect_prim[i][1]-ERRMAX*detect_prim[i][1]
+        if neg>detect_sec[i][1] or detect_sec[i][1]>pos:
+            coincid[i][2]=0
 
     plt.figure(num=3)
     plt.title("Plot coincidence")
