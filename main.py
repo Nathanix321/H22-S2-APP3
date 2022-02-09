@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 TABMAX=38167
 ERRMAX=0.01
+RUNTIME=93842428.589/2
 
 def coincidence(array1, array2, coincidence):
     j = 0
@@ -29,11 +30,21 @@ def noncoincidence(array1, array2, noncoincidence):
 
 
 
-def plot_loghist(x, bins):
+def plot_loghist(x, bins, factor):
   hist, bins = np.histogram(x, bins=bins)
   logbins = np.logspace(np.log10(bins[0]),np.log10(bins[-1]),len(bins))
-  plt.hist(x, bins=logbins)
+  plt.hist(x, bins=logbins, weights=factor*np.ones_like(x))
   plt.xscale('log')
+
+def tauxmuons(x):
+    t=RUNTIME/1000
+    tm=0
+    for i in range(TABMAX*2-1):
+        tm+=x[i][3]/1000
+    taux=((2*(TABMAX+1))/(t-tm))
+    print(tm)
+    print(taux)
+    return taux
 
 def main():
     f1 = open("S2GE_APP3_Problematique_Detecteur_Primaire.csv", "r")
@@ -52,6 +63,12 @@ def main():
     mVn = noncoincid[:, 2]
 
     All = np.append(detect_prim, detect_sec, axis=0)
+
+    plt.figure(num=1)
+    plt.title("All")
+    plot_loghist(All[:, 2], 10, tauxmuons(All))
+    plt.show()
+
 
 
 
