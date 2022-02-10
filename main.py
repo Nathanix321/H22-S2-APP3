@@ -64,7 +64,7 @@ def main():
     plt.savefig("letn1102-joll1702(non-corrigé)")
 
     plt.figure(num=2)
-    plt.title("Histogramme des distributions d'analyse de détection de muons (corrigé pour temps mort)")
+    plt.title("Histogramme des distributions d'analyse de détection de muons (corrigé)")
     plot_loghist(detect_prim[:, 2], n_bin, tauxmuons(detect_prim), 'step', 'grey', "Tous les évènements")
     plot_loghist(mVc, n_bin, tauxmuons(detect_prim), 'step', 'red', "Évènements coincidents")
     plot_loghist(mVn[mVn != 0], n_bin, tauxmuons(detect_prim), 'step', 'lime', "Évènments non-coincidents")
