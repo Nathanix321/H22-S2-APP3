@@ -66,6 +66,7 @@ def main():
     plt.xlabel("Voltage PMSi calculé [mV]")
     plt.ylabel("Taux/classe [$s^-1$]")
     plt.legend(loc="upper right")
+    plt.savefig("letn1102-joll1702(non-corrigé)")
     plt.show()
 
 
