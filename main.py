@@ -52,21 +52,26 @@ def main():
     mVc = np.array(mVc)
     mVn = mVn[:, 2]
 
-
-    #noncoincidence(detect_prim, detect_sec, mVn)
-
-    test = np.append(mVc, mVn)
-
-    plt.figure(num=1)
     n_bin=25
+    plt.figure(num=1)
     plt.title("Histogramme des distributions d'analyse de détection de muons")
+    plot_loghist(detect_prim[:, 2], n_bin, 1/(RUNTIME/1000), 'step', 'grey', "Tous les évènements")
+    plot_loghist(mVc, n_bin, 1/(RUNTIME/1000), 'step', 'red', "Évènements coincidents")
+    plot_loghist(mVn[mVn != 0], n_bin, 1/(RUNTIME/1000), 'step', 'lime', "Évènments non-coincidents")
+    plt.xlabel("Voltage PMSi calculé [mV]")
+    plt.ylabel("Taux/classe [$s^-1$]")
+    plt.legend(loc="upper right")
+    plt.savefig("letn1102-joll1702(non-corrigé)")
+
+    plt.figure(num=2)
+    plt.title("Histogramme des distributions d'analyse de détection de muons (corrigé pour temps mort)")
     plot_loghist(detect_prim[:, 2], n_bin, tauxmuons(detect_prim), 'step', 'grey', "Tous les évènements")
     plot_loghist(mVc, n_bin, tauxmuons(detect_prim), 'step', 'red', "Évènements coincidents")
     plot_loghist(mVn[mVn != 0], n_bin, tauxmuons(detect_prim), 'step', 'lime', "Évènments non-coincidents")
     plt.xlabel("Voltage PMSi calculé [mV]")
     plt.ylabel("Taux/classe [$s^-1$]")
     plt.legend(loc="upper right")
-    plt.savefig("letn1102-joll1702(non-corrigé)")
+    plt.savefig("letn1102-joll1702(corrigé)")
     plt.show()
 
 
